@@ -1,5 +1,6 @@
 from rook.serverless import serverless_rook
 import random
+import json
 
 tasks = [
   "Deploy my serverless application",
@@ -12,10 +13,10 @@ tasks = [
 @serverless_rook
 def handler(event, context):
   response = {
-    "status": 200,
+    "statusCode": 200,
     "isBase64Encoded": False,
     "headers": { "Access-Control-Allow-Origin": "*" },  # Required for CORS support to work
-    "body": { "task": random.choice(tasks) }
+    "body": json.dumps({ "task": random.choice(tasks) })
   }
 
   return response
