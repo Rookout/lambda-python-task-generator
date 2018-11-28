@@ -11,8 +11,10 @@ jobs:
           name: Install Serverless CLI and dependencies
           command: |
             sudo npm i -g serverless
-            sudo apt-get install python-dev python-pip -qy
-            pip install -r requirements.txt -t .
+            sudo apt-get install python-dev -qy
+            sudo curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+            sudo python get-pip.py
+            sudo pip install -r requirements.txt -t .
 
       - run: 
           name: Set Token in serverless config
