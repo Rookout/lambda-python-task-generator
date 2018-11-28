@@ -1,1 +1,1 @@
-# lambda-python-task-generator
+# lambda-task-generator
