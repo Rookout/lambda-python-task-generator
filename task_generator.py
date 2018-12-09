@@ -12,10 +12,11 @@ tasks = [
 
 @serverless_rook
 def handler(event, context):
-  event_data = json.dumps(event)
-  headers = event_data["headers"]
-  if headers["x-from"] == "e2e-test":
-    print("E2E Test just triggered this function")
+  print(event.headers)
+  print(type(event.headers))
+  # headers = event["headers"]
+  # if headers["x-from"] == "e2e-test":
+  #   print("E2E Test just triggered this function")
 
   response = {
     "statusCode": 200,
