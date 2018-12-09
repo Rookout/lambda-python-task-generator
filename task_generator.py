@@ -12,6 +12,10 @@ tasks = [
 
 @serverless_rook
 def handler(event, context):
+  headers = event['headers']
+  if headers['X-From'] == 'e2e-test':
+    print("E2E Test just triggered this function")
+
   response = {
     "statusCode": 200,
     "isBase64Encoded": False,
