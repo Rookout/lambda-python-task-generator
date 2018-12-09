@@ -12,6 +12,7 @@ tasks = [
 
 @serverless_rook
 def handler(event, context):
+  print(json.dumps(context))
   # print(event)
   # print(type(event))
   # print(event['headers'])
