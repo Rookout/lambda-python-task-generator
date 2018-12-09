@@ -10,7 +10,7 @@ service: task-generator-python
 # The `provider` block defines where your service will be deployed
 provider:
   name: aws
-  runtime: python2.7
+  runtime: python3.5
   stage: production
   memorySize: 1024
   timeout: 30

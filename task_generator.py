@@ -12,7 +12,7 @@ tasks = [
 
 @serverless_rook
 def handler(event, context):
-  print(context.client_context)
+  print(event)
   # print(event)
   # print(type(event))
   # print(event['headers'])
