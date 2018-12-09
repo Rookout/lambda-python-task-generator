@@ -12,10 +12,10 @@ tasks = [
 
 @serverless_rook
 def handler(event, context):
-  print(event)
-  print(type(event))
-  print(event['headers'])
-  print(type(event['headers']))
+  # print(event)
+  # print(type(event))
+  # print(event['headers'])
+  # print(type(event['headers']))
   # headers = event["headers"]
   # if headers["x-from"] == "e2e-test":
   #   print("E2E Test just triggered this function")
