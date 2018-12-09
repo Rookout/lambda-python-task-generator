@@ -12,6 +12,8 @@ tasks = [
 
 @serverless_rook
 def handler(event, context):
+  print(event)
+  print(type(event))
   print(event['headers'])
   print(type(event['headers']))
   # headers = event["headers"]
