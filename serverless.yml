@@ -7,23 +7,30 @@
 # The `service` block is the name of the service
 service: task-generator-python
 
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  environment:
+    DESCRIPTION:
+      production: "Production demo - DO NOT DELETE"
+      staging: "Staging demo - DO NOT DELETE"
+
 # The `provider` block defines where your service will be deployed
 provider:
   name: aws
   runtime: python2.7
-  stage: production
+  stage: staging
   memorySize: 1024
   timeout: 30
   environment:
-    'ROOKOUT_TOKEN': 'YOUR_ROOKOUT_TOKEN'
+    'ROOKOUT_TOKEN': ${opt:token}
     'ROOKOUT_ROOK_TAGS': 'tasks-multi-infra'
 
 # The `functions` block defines what code to deploy
 functions:
   generateTask:
-    description: Production demo - DO NOT DELETE
+    description: ${self:custom.environment.DESCRIPTION.${self:custom.stage}}
     tags:
-      env: production
+      env: ${self:custom.stage}
     handler: task_generator.handler
     events:
       - http:
