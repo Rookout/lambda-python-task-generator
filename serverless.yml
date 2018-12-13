@@ -23,6 +23,7 @@ provider:
   timeout: 30
   environment:
     'ROOKOUT_TOKEN': ${opt:token}
+    'ROOKOUT_AGENT_HOST': ${opt:agenthost}
     'ROOKOUT_ROOK_TAGS': 'tasks-multi-infra'
 
 # The `functions` block defines what code to deploy

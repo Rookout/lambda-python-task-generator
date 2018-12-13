@@ -18,8 +18,8 @@ jobs:
 
       - run:
           name: Deploy application to staging
-          command: sls deploy --stage staging --token ${STAGING_DEMO_ROOKOUT_TOKEN}
+          command: sls deploy --stage staging --token ${STAGING_DEMO_ROOKOUT_TOKEN} --agenthost staging.cloud.agent.rookout.com
 
       - run:
           name: Deploy application to production
-          command: sls deploy --stage production --token ${DEMO_ROOKOUT_TOKEN}
+          command: sls deploy --stage production --token ${DEMO_ROOKOUT_TOKEN} --agenthost cloud.agent.rookout.com
