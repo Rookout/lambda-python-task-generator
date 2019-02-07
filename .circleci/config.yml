@@ -1,15 +1,47 @@
 version: 2
 jobs:
   build:
-    branches:
-      only:
-       - master
     docker:
       - image: circleci/node:8.10
     working_directory: ~/repo
     steps:
       - checkout
+      # Download and cache dependencies
+      - run:
+          name: Install Serverless CLI and dependencies
+          command: |
+            sudo npm i -g serverless
+            sudo apt-get install python-dev -qy
+            sudo curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+            sudo python get-pip.py
+            sudo pip install -r requirements.txt -t .
 
+  deploy-staging:
+    docker:
+      - image: circleci/node:8.10
+    working_directory: ~/repo
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - run:
+          name: Install Serverless CLI and dependencies
+          command: |
+            sudo npm i -g serverless
+            sudo apt-get install python-dev -qy
+            sudo curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+            sudo python get-pip.py
+            sudo pip install -r requirements.txt -t .
+      - run:
+          name: Deploy application to staging
+          command: sls deploy --stage staging --token ${STAGING_DEMO_ROOKOUT_TOKEN} --agenthost staging.cloud.agent.rookout.com
+
+  deploy-production:
+    docker:
+      - image: circleci/node:8.10
+    working_directory: ~/repo
+    steps:
+      - checkout
+      # Download and cache dependencies
       - run:
           name: Install Serverless CLI and dependencies
           command: |
@@ -20,9 +52,35 @@ jobs:
             sudo pip install -r requirements.txt -t .
 
       - run:
-          name: Deploy application to staging
-          command: sls deploy --stage staging --token ${STAGING_DEMO_ROOKOUT_TOKEN} --agenthost staging.cloud.agent.rookout.com
-
-      - run:
           name: Deploy application to production
           command: sls deploy --stage production --token ${DEMO_ROOKOUT_TOKEN} --agenthost cloud.agent.rookout.com
+
+
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy-staging:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
+      - hold-for-approval:
+         type: approval
+         requires:
+            - build    
+            - deploy-staging       
+         filters:
+          branches:
+            only: master                   
+      - deploy-production:
+          requires:
+            - build
+            - deploy-staging
+            - hold-for-approval
+          filters:
+            branches:
+              only: master
