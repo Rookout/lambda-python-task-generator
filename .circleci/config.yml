@@ -1,4 +1,13 @@
 version: 2
+
+references:
+  setup_build_tools: &setup_build_tools
+    run:
+      command: |
+        mkdir -p ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+        pip install -e git+ssh://git@github.com/Rookout/build_tools.git#egg=rookout_build_tools
+        
+
 jobs:
   build:
     docker:
@@ -35,6 +44,16 @@ jobs:
           name: Deploy application to staging
           command: sls deploy --stage staging --token ${STAGING_DEMO_ROOKOUT_TOKEN} --agenthost staging.cloud.agent.rookout.com
 
+  notify_slack_staging:
+    docker:
+        - image: python:2.7
+    working_directory: ~/repo
+    environment:
+      ENV: staging
+    steps:
+      - *setup_build_tools
+      - run: rbt notify deployment -t demo-deployed
+
   deploy-production:
     docker:
       - image: circleci/node:8.10
@@ -55,7 +74,15 @@ jobs:
           name: Deploy application to production
           command: sls deploy --stage production --token ${DEMO_ROOKOUT_TOKEN} --agenthost cloud.agent.rookout.com
 
-
+  notify_slack_production:
+    docker:
+        - image: python:2.7
+    working_directory: ~/repo
+    environment:
+      ENV: production
+    steps:
+      - *setup_build_tools
+      - run: rbt notify deployment -t demo-deployed
 
 workflows:
   version: 2
@@ -65,6 +92,12 @@ workflows:
       - deploy-staging:
           requires:
             - build
+          filters:
+            branches:
+              only: master
+      - notify_slack_staging:
+          requires:
+            - deploy-staging
           filters:
             branches:
               only: master
@@ -81,6 +114,12 @@ workflows:
             - build
             - deploy-staging
             - hold-for-approval
+          filters:
+            branches:
+              only: master
+      - notify_slack_production:
+          requires:
+            - deploy-production
           filters:
             branches:
               only: master
