@@ -42,7 +42,7 @@ jobs:
             sudo pip install -r requirements.txt -t .
       - run:
           name: Deploy application to staging
-          command: sls deploy --stage staging --token ${STAGING_DEMO_ROOKOUT_TOKEN} --agenthost staging.cloud.agent.rookout.com
+          command: sls deploy --stage staging --token ${STAGING_DEMO_ROOKOUT_TOKEN} --agenthost wss://staging.control.rookout.com
 
   notify_slack_staging:
     docker:
@@ -72,7 +72,7 @@ jobs:
 
       - run:
           name: Deploy application to production
-          command: sls deploy --stage production --token ${DEMO_ROOKOUT_TOKEN} --agenthost cloud.agent.rookout.com
+          command: sls deploy --stage production --token ${DEMO_ROOKOUT_TOKEN} --agenthost wss://control.rookout.com
 
   notify_slack_production:
     docker:
