@@ -25,6 +25,7 @@ provider:
     'ROOKOUT_TOKEN': ${opt:token}
     'ROOKOUT_AGENT_HOST': ${opt:agenthost}
     'ROOKOUT_ROOK_TAGS': 'tasks-multi-infra'
+    'ROOKOUT_LABELS': 'app:tasks-multi-infra,env:${self:custom.stage},type:serverless'
 
 # The `functions` block defines what code to deploy
 functions:
