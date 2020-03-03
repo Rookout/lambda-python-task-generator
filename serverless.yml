@@ -23,9 +23,10 @@ provider:
   timeout: 30
   environment:
     'ROOKOUT_TOKEN': ${opt:token}
-    'ROOKOUT_AGENT_HOST': ${opt:agenthost}
+    'ROOKOUT_CONTROLLER_HOST': ${opt:agenthost}
     'ROOKOUT_ROOK_TAGS': 'tasks-multi-infra'
     'ROOKOUT_LABELS': 'app:tasks-multi-infra,env:${self:custom.stage},type:serverless'
+    'ROOKOUT_DEBUG': 1
 
 # The `functions` block defines what code to deploy
 functions:
