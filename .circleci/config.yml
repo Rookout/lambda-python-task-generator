@@ -20,9 +20,7 @@ jobs:
           name: Install Serverless CLI and dependencies
           command: |
             sudo npm i -g serverless
-            sudo apt-get install python-dev -qy
-            sudo curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-            sudo python get-pip.py
+            sudo apt-get install python-dev -qy            
             sudo pip install -r requirements.txt -t .
 
   deploy-staging:
@@ -36,9 +34,7 @@ jobs:
           name: Install Serverless CLI and dependencies
           command: |
             sudo npm i -g serverless
-            sudo apt-get install python-dev -qy
-            sudo curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-            sudo python get-pip.py
+            sudo apt-get install python-dev -qy            
             sudo pip install -r requirements.txt -t .
       - run:
           name: Deploy application to staging
@@ -65,9 +61,7 @@ jobs:
           name: Install Serverless CLI and dependencies
           command: |
             sudo npm i -g serverless
-            sudo apt-get install python-dev -qy
-            sudo curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-            sudo python get-pip.py
+            sudo apt-get install python-dev -qy            
             sudo pip install -r requirements.txt -t .
 
       - run:
