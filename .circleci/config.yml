@@ -19,8 +19,8 @@ jobs:
       - run:
           name: Install Serverless CLI and dependencies
           command: |
-            sudo npm i -g serverless            
-            sudo pip install -r requirements.txt -t .
+            npm i -g serverless            
+            pip install -r requirements.txt -t .
 
   deploy-staging:
     docker:
@@ -32,8 +32,8 @@ jobs:
       - run:
           name: Install Serverless CLI and dependencies
           command: |
-            sudo npm i -g serverless            
-            sudo pip install -r requirements.txt -t .
+            npm i -g serverless            
+            pip install -r requirements.txt -t .
       - run:
           name: Deploy application to staging
           command: sls deploy --stage staging --token ${STAGING_DEMO_ROOKOUT_TOKEN} --agenthost wss://staging.control.rookout.com
@@ -58,8 +58,8 @@ jobs:
       - run:
           name: Install Serverless CLI and dependencies
           command: |
-            sudo npm i -g serverless            
-            sudo pip install -r requirements.txt -t .
+            npm i -g serverless            
+            pip install -r requirements.txt -t .
 
       - run:
           name: Deploy application to production
