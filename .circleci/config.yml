@@ -11,7 +11,7 @@ references:
 jobs:
   build:
     docker:
-      - image: circleci/node:12.10
+      - image: cimg/python:3.8-node
     working_directory: ~/repo
     steps:
       - checkout
@@ -19,15 +19,12 @@ jobs:
       - run:
           name: Install Serverless CLI and dependencies
           command: |
-            sudo npm i -g serverless
-            sudo apt-get install python-dev -qy
-            sudo curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-            sudo python get-pip.py
-            sudo pip install -r requirements.txt -t .
+            sudo npm i -g serverless            
+            pip install -r requirements.txt -t .
 
   deploy-staging:
     docker:
-      - image: circleci/node:12.10
+      - image: cimg/python:3.8-node
     working_directory: ~/repo
     steps:
       - checkout
@@ -35,18 +32,15 @@ jobs:
       - run:
           name: Install Serverless CLI and dependencies
           command: |
-            sudo npm i -g serverless
-            sudo apt-get install python-dev -qy
-            sudo curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-            sudo python get-pip.py
-            sudo pip install -r requirements.txt -t .
+            sudo npm i -g serverless            
+            pip install -r requirements.txt -t .
       - run:
           name: Deploy application to staging
           command: sls deploy --stage staging --token ${STAGING_DEMO_ROOKOUT_TOKEN} --agenthost wss://staging.control.rookout.com
 
   notify_slack_staging:
     docker:
-        - image: python:3.8
+        - image: cimg/python:3.8-node
     working_directory: ~/repo
     environment:
       ENV: staging
@@ -56,7 +50,7 @@ jobs:
 
   deploy-production:
     docker:
-      - image: circleci/node:12.10
+      - image: cimg/python:3.8-node
     working_directory: ~/repo
     steps:
       - checkout
@@ -64,11 +58,8 @@ jobs:
       - run:
           name: Install Serverless CLI and dependencies
           command: |
-            sudo npm i -g serverless
-            sudo apt-get install python-dev -qy
-            sudo curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-            sudo python get-pip.py
-            sudo pip install -r requirements.txt -t .
+            sudo npm i -g serverless            
+            pip install -r requirements.txt -t .
 
       - run:
           name: Deploy application to production
@@ -76,7 +67,7 @@ jobs:
 
   notify_slack_production:
     docker:
-        - image: python:3.8
+        - image: cimg/python:3.8-node
     working_directory: ~/repo
     environment:
       ENV: production
