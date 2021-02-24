@@ -91,20 +91,11 @@ workflows:
             - deploy-staging
           filters:
             branches:
-              only: master
-      - hold-for-approval:
-         type: approval
-         requires:
-            - build    
-            - deploy-staging       
-         filters:
-          branches:
-            only: master                   
+              only: master              
       - deploy-production:
           requires:
             - build
             - deploy-staging
-            - hold-for-approval
           filters:
             branches:
               only: master
