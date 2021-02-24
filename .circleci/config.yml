@@ -9,7 +9,7 @@ references:
         
 
 jobs:
-  install-serverless:
+  build:
     docker:
       - image: cimg/python:2.7-node
     working_directory: ~/repo
@@ -19,20 +19,9 @@ jobs:
       - run:
           name: Install Serverless CLI and dependencies
           command: |
-            sudo npm i -g serverless            
+            sudo npm i -g serverless        
+            pip install -r requirements.txt -t .    
             
-  build:
-    docker:
-      - image: lambci/lambda:build-python2.7
-    working_directory: ~/repo
-    steps:
-      - checkout
-      # Download and cache dependencies
-      - run:
-          name: Pip install
-          command: |         
-            pip install -r requirements.txt -t .
-
   deploy-staging:
     docker:
       - image: cimg/python:2.7-node
@@ -90,7 +79,6 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - install-serverless
       - build
       - deploy-staging:
           requires:
