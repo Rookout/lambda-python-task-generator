@@ -29,7 +29,7 @@ jobs:
       - checkout
       # Download and cache dependencies
       - run:
-          name: Install Serverless CLI and dependencies
+          name: Pip install
           command: |         
             pip install -r requirements.txt -t .
 
