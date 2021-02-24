@@ -40,7 +40,7 @@ jobs:
 
   notify_slack_staging:
     docker:
-        - image: cimg/python:2.7-node
+        - image: cimg/python:3.8-node
     working_directory: ~/repo
     environment:
       ENV: staging
