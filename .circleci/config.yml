@@ -11,7 +11,7 @@ references:
 jobs:
   build:
     docker:
-      - image: cimg/python:3.8-node
+      - image: cimg/python:2.7-node
     working_directory: ~/repo
     steps:
       - checkout
@@ -19,12 +19,12 @@ jobs:
       - run:
           name: Install Serverless CLI and dependencies
           command: |
-            sudo npm i -g serverless            
-            pip install -r requirements.txt -t .
-
+            sudo npm i -g serverless        
+            pip install -r requirements.txt -t .    
+            
   deploy-staging:
     docker:
-      - image: cimg/python:3.8-node
+      - image: cimg/python:2.7-node
     working_directory: ~/repo
     steps:
       - checkout
@@ -40,7 +40,7 @@ jobs:
 
   notify_slack_staging:
     docker:
-        - image: cimg/python:3.8-node
+        - image: cimg/python:2.7-node
     working_directory: ~/repo
     environment:
       ENV: staging
@@ -50,7 +50,7 @@ jobs:
 
   deploy-production:
     docker:
-      - image: cimg/python:3.8-node
+      - image: cimg/python:2.7-node
     working_directory: ~/repo
     steps:
       - checkout
