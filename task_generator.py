@@ -1,5 +1,5 @@
 from rook.serverless import serverless_rook
-import urllib.request, urllib.parse, url
+import urllib.request, urllib.parse
 import random
 import json
 
