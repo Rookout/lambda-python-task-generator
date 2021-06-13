@@ -1,5 +1,5 @@
 from rook.serverless import serverless_rook
-import urllib, urllib2
+import urllib.request, urllib.parse, url
 import random
 import json
 
@@ -40,8 +40,8 @@ def get_random(min, max):
     "min": "{}".format(min),
     "max": "{}".format(max)
   }
-  data = urllib.urlencode(values)
-  response = urllib2.urlopen("https://www.random.org/integers/?{values}".format(values=data))
+  data = urllib.parse.urlencode(values)
+  response = urllib.request.urlopen("https://www.random.org/integers/?{values}".format(values=data))
   random = response.read()
   
   return int(random.strip())
